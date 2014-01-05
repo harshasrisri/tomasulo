@@ -1,11 +1,11 @@
 CC=gcc
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall -g
 LDFLAGS=
 
 SOURCES=main.c utils.c
 EXECUTABLE=tomasulo
 
-OBJECTS=$(SOURCES:.cpp=.o)
+OBJECTS=$(SOURCES:.c=.o)
 
 all: $(SOURCES) $(EXECUTABLE)
 		
@@ -16,4 +16,4 @@ $(EXECUTABLE): $(OBJECTS)
 		$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm *.o tomasulo *core *stackdump &> /dev/null
+	@rm -f *.o tomasulo *core *stackdump

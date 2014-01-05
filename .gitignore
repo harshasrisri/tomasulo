@@ -1,1 +1,4 @@
 *.swp
+core
+*.o
+tomasulo

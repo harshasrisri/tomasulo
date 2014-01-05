@@ -9,7 +9,7 @@ char *inst_trace_file;
 void parse_args (int argc, char **argv) {
 	int c;
 
-	while ((c = getopt (argc, argv, "dth:")) != 1) {
+	while ((c = getopt (argc, argv, "d:t:h")) != 1) {
 		switch (c) {
 			case 'd' :
 				inst_defn_file = strdup (optarg);
@@ -24,7 +24,6 @@ void parse_args (int argc, char **argv) {
 				/* print_help(); */
 				break;
 			default :
-				perr ("Invalid command line option :%s\n", optarg);
 				exit (-1);
 		}
 	}
