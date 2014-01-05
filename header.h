@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define perr(fmt, ...) fprintf(stderr, "[ERROR] (%s:%d) " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__)
 #define pwarn(fmt, ...) fprintf(stderr, "[WARN] (%s:%d) " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__)

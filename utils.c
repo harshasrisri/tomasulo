@@ -1,7 +1,7 @@
 # include "header.h"
 
-extern char *optarg;
-extern int optind, opterr, optopt;
+/* extern char *optarg; */
+/* extern int optind, opterr, optopt; */
 
 char *inst_defn_file;
 char *inst_trace_file;

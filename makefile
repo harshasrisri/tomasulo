@@ -1,12 +1,19 @@
 CC=gcc
-CC_OPTIONS=-Wall -g
+CFLAGS=-c -Wall
+LDFLAGS=
 
-all: header.h utils
-	$(CC) $(CC_OPTIONS) utils.o -o tomasulo
+SOURCES=main.c utils.c
+EXECUTABLE=tomasulo
 
-utils:header.h
-	$(CC) $(CC_OPTIONS) -c utils.c
+OBJECTS=$(SOURCES:.cpp=.o)
+
+all: $(SOURCES) $(EXECUTABLE)
+		
+$(EXECUTABLE): $(OBJECTS) 
+		$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+
+.cpp.o: header.h
+		$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	@rm *.o core *.stackdump tomasulo
-
+	rm *.o tomasulo *core *stackdump &> /dev/null
