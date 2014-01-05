@@ -42,6 +42,10 @@ int line_2_words (char ***words, char *line, char *temp_delim) {
 	char **sentence = NULL, *temp, *save, c;
 	int word_count = 0, white = 1;
 
+	if (*words)
+		while (**words) free (**words);
+	free (*words);
+
 	if ((!line) || (!*line) || !temp_delim) {
 		return 0;
 	}

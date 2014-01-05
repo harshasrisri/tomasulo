@@ -4,31 +4,25 @@ Operation *ops = NULL;
 int op_count = 0;
 
 static void create_operation (char *line) {
-	char **definition;
-	int fields, temp;
+	char name[20];
+	int num_ops, latency;;
 
 	if (!(op_count % 10))
 		ops = (Operation *) realloc (ops, sizeof(Operation) * 10);
 
-	fields = line_2_words (&definition, line, ":");
+	sscanf (line, "%s %d %d", name, &num_ops, &latency);
 
-	if (fields != 3)
-		fatal ("Invalid instruction definition : %s\n", line);
+	if (!name[0])
+		fatal ("OP name not proper in %s\n", line);
+	ops[op_count].name = strdup (name);
 
-	if (!definition)
-		fatal ("Something's wrong in the code parsing definitions\n");
+	if (0 == num_ops)
+		fatal ("Operand count not proper in %s\n", line);
+	ops[op_count].num_ops = num_ops;
 
-	if (!definition[0])
-		fatal ("definition[0] not proper\n");
-	ops[op_count].name = strdup (definition[0]);
-
-	if (!definition[1] || 0 == (temp = atoi(definition[1])))
-		fatal ("definition[1] not proper\n");
-	ops[op_count].num_ops = temp;
-
-	if (!definition[2] || 0 == (temp = atoi(definition[2])))
-		fatal ("definition[2] not proper\n");
-	ops[op_count].latency = temp;
+	if (0 == latency)
+		fatal ("Latency not proper in %s\n", line);
+	ops[op_count].latency = latency;
 
 	op_count++;
 }
