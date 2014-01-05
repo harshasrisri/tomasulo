@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-c -Wall -g
 LDFLAGS=
 
-SOURCES=main.c utils.c
+SOURCES=tomasulo.c utils.c parser.c
 EXECUTABLE=tomasulo
 
 OBJECTS=$(SOURCES:.c=.o)
@@ -12,8 +12,10 @@ all: $(SOURCES) $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS) 
 		$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
-.cpp.o: header.h
+.c.o:
 		$(CC) $(CFLAGS) $< -o $@
+
+$(OBJECTS): header.h
 
 clean:
 	@rm -f *.o tomasulo *core *stackdump
