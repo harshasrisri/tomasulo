@@ -3,7 +3,11 @@
 extern char *optarg;
 extern int optind, opterr, optopt;
 
+char *inst_defn_file;
+char *inst_trace_file;
+
 void parse_args (int argc, char **argv) {
+	int c;
 
 	while ((c = getopt (argc, argv, "dth:")) != 1) {
 		switch (c) {

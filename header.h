@@ -14,4 +14,5 @@ typedef struct {
 extern char *inst_defn_file;
 extern char *inst_trace_file;
 
-
+extern void parse_args (int argc, char **argv);
+extern int line_2_words (char ***words, char *line, char *temp_delim);
