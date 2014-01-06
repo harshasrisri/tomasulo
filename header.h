@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "arch.h"
+#include "structs.h"
 
 #define fatal(fmt, ...) do {fprintf(stderr, "[FATAL] (%s:%d) " fmt, __FILE__, __LINE__, ##__VA_ARGS__); exit(--err_count); } while (0)
 #define perr(fmt, ...)  do {fprintf(stderr, "[ERROR] (%s:%d) " fmt, __FILE__, __LINE__, ##__VA_ARGS__); } while (0)
@@ -12,15 +13,6 @@
 
 #define DEF_INSTR_DEFN_FILE "instr.def"
 #define DEF_TRACE_FILE "trace"
-
-enum instr_type { UNDEFINED, INTEGER, FLOAT , COMMON };
-
-typedef struct {
-	char *name;
-	int num_ops;
-	int latency;
-	int type;
-} Operation;
 
 extern int err_count;
 extern char *inst_defn_file;

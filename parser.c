@@ -30,11 +30,11 @@ static void create_operation (char *line) {
 		ops[op_count].type = INTEGER;
 		strcpy (typ, "Integer");
 	}
-	if (type == 'F') {
+	else if (type == 'F') {
 		ops[op_count].type = FLOAT;
 		strcpy (typ, "Floating Point");
 	}
-	if (type == 'C') {
+	else if (type == 'C') {
 		ops[op_count].type = COMMON;
 		strcpy (typ, "Common");
 	}

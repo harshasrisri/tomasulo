@@ -15,7 +15,7 @@ $(EXECUTABLE): $(OBJECTS)
 .c.o:
 		$(CC) $(CFLAGS) $< -o $@
 
-$(OBJECTS): header.h arch.h
+$(OBJECTS): *.h
 
 clean:
 	@rm -f *.o tomasulo *core *stackdump
