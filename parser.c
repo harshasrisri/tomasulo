@@ -76,13 +76,13 @@ static void queue_instuction (char *line) {
 	if (!lookup_definition (opcode, &instr_defn)) 
 		fatal ("Undefined instruction : %s\n", line);
 
-	iq[instr_count].opcd = strdup (strtok (line, " ,"));
+	iq[instr_count].opcd = strdup (strtok (line, DELIMITERS));
 
-	if (instr_defn.num_ops > 0) iq[instr_count].dest = strdup (strtok (NULL, " ,"));
+	if (instr_defn.num_ops > 0) iq[instr_count].dest = strdup (strtok (NULL, DELIMITERS));
 
-	if (instr_defn.num_ops > 1) iq[instr_count].src1 = strdup (strtok (NULL, " ,"));
+	if (instr_defn.num_ops > 1) iq[instr_count].src1 = strdup (strtok (NULL, DELIMITERS));
 
-	if (instr_defn.num_ops > 2) iq[instr_count].src2 = strdup (strtok (NULL, " ,"));
+	if (instr_defn.num_ops > 2) iq[instr_count].src2 = strdup (strtok (NULL, DELIMITERS));
 
 	iq[instr_count].num_ops = instr_defn.num_ops;
 

@@ -14,6 +14,8 @@
 #define DEF_INSTR_DEFN_FILE "instr.def"
 #define DEF_TRACE_FILE "trace"
 
+#define DELIMITERS " \t,"
+
 extern int err_count;
 extern char *inst_defn_file;
 extern char *inst_trace_file;
