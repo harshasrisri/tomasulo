@@ -101,7 +101,7 @@ void parse_file (char *file_name, char file_type) {
 	FILE *fp = fopen (file_name, "r");
 
 	if (!fp)
-		fatal ("Can't open definition file\n");
+		fatal ("Can't open definition file : %s\n", file_name);
 
 	while (fgets (line, 200, fp)) {
 
