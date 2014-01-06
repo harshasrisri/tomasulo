@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-c -Wall -g
+CFLAGS=-c -Wall -g -Iinclude
 LDFLAGS=
 
 SOURCES=tomasulo.c utils.c parser.c
@@ -15,7 +15,7 @@ $(EXECUTABLE): $(OBJECTS)
 .c.o:
 		$(CC) $(CFLAGS) $< -o $@
 
-$(OBJECTS): *.h
+$(OBJECTS): include/*.h
 
 clean:
 	@rm -f *.o tomasulo *core *stackdump

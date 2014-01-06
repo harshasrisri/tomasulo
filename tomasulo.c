@@ -8,4 +8,5 @@ int main (int argc, char **argv) {
 
 	define_operations ();
 
+	return 0;
 }
