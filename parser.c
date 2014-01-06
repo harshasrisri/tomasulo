@@ -14,7 +14,7 @@ static void create_operation (char *line) {
 	if (!(op_count % 10))
 		ops = (Operation *) realloc (ops, sizeof(Operation) * 10);
 
-	if (NUM_FIELDS != sscanf (line, "%s %d %d %c", name, &num_ops, &latency, &type))
+	if (NUM_OP_DEFN_FIELDS != sscanf (line, "%s %d %d %c", name, &num_ops, &latency, &type))
 		fatal ("Invalid number of fields in instruction definition : %s\n", line);
 
 	if (!name[0])
