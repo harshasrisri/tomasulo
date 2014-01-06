@@ -13,9 +13,9 @@ typedef struct {
 typedef struct {
 	char *opcd;
 	char *dest;
-	char *src_one;
-	char *src_two;
-	int no_op;
+	char *src1;
+	char *src2;
+	int num_ops;
 	int latency;
 	unsigned int issue_time;
 	unsigned int exec_time;
