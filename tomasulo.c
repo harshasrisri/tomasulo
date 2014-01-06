@@ -6,7 +6,9 @@ int main (int argc, char **argv) {
 
 	parse_args (argc, argv);
 
-	define_operations ();
+	parse_file (inst_defn_file, 'd');
+
+	parse_file (inst_trace_file, 't');
 
 	return 0;
 }

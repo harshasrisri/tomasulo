@@ -50,15 +50,15 @@ static void create_operation (char *line) {
 	op_count++;
 }
 
-void define_operations (void) {
+void parse_file (char *file_name, char file_type) {
 	char line[200];
 	int i;
-	FILE *defn_file = fopen (inst_defn_file, "r");
+	FILE *fp = fopen (file_name, "r");
 
-	if (!defn_file)
+	if (!fp)
 		fatal ("Can't open definition file\n");
 
-	while (fgets (line, 200, defn_file)) {
+	while (fgets (line, 200, fp)) {
 
 		for (i = 0; isspace (line[i]); i++)
 			;
@@ -67,6 +67,12 @@ void define_operations (void) {
 
 		if (line[i] == '#') continue;
 
-		create_operation (&line[i]);
+		if (file_type == 'd')
+			create_operation (&line[i]);
+		else if (file_type == 't')
+			;
+			/* queue_instuction (&line[i]); */
+		else
+			fatal ("unknown file type to function : %c\n", file_type);
 	}
 }
