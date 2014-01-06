@@ -1,7 +1,10 @@
 #include "header.h"
 
 Operation *ops = NULL;
+Instruction *iq = NULL;
+
 int op_count = 0;
+int instr_count = 0;
 
 static void create_operation (char *line) {
 	char name[20], typ[20];
@@ -50,6 +53,10 @@ static void create_operation (char *line) {
 	op_count++;
 }
 
+static void queue_instuction (char *line) {
+
+}
+
 void parse_file (char *file_name, char file_type) {
 	char line[200];
 	int i;
@@ -67,12 +74,15 @@ void parse_file (char *file_name, char file_type) {
 
 		if (line[i] == '#') continue;
 
-		if (file_type == 'd')
-			create_operation (&line[i]);
-		else if (file_type == 't')
-			;
-			/* queue_instuction (&line[i]); */
-		else
-			fatal ("unknown file type to function : %c\n", file_type);
+		switch (file_type) {
+			case 'd' :
+				create_operation (&line[i]);
+				break;
+			case 't' :
+				queue_instuction (&line[i]);
+				break;
+			default :
+				fatal ("unknown file type to function : %c\n", file_type);
+		}
 	}
 }

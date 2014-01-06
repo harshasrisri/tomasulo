@@ -19,4 +19,4 @@ extern char *inst_defn_file;
 extern char *inst_trace_file;
 
 extern void parse_args (int argc, char **argv);
-extern void define_operations (void);
+extern void parse_file (char *file_name, char file_type);
