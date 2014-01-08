@@ -1,11 +1,5 @@
 #include "header.h"
 
-Operation *ops = NULL;
-Instruction *iq = NULL;
-
-int op_count = 0;
-int instr_count = 0;
-
 static void create_operation (char *line) {
 	char name[20], typ[20];
 	int num_ops, latency; 
