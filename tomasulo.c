@@ -24,5 +24,7 @@ int main (int argc, char **argv) {
 		cycles++;
 	}
 
+	finish ();
+
 	return 0;
 }

@@ -33,3 +33,8 @@ void parse_args (int argc, char **argv) {
 	if (!inst_trace_file)
 		pinfo ("Using default instruction trace file : %s\n", inst_trace_file = strdup (DEF_TRACE_FILE));
 }
+
+void finish (void) {
+	free (iq);
+	free (ops);
+}

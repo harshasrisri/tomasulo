@@ -11,9 +11,6 @@
 #define pwarn(fmt, ...) do {fprintf(stderr,  "[WARN] (%s:%d) " fmt, __FILE__, __LINE__, ##__VA_ARGS__); } while (0)
 #define pinfo(fmt, ...) do {fprintf(stderr,  "[INFO] (%s:%d) " fmt, __FILE__, __LINE__, ##__VA_ARGS__); } while (0)
 
-#define DEF_INSTR_DEFN_FILE "instr.def"
-#define DEF_TRACE_FILE "trace"
-
 #define DELIMITERS " \t,"
 
 extern char *inst_defn_file;
@@ -21,6 +18,7 @@ extern char *inst_trace_file;
 
 extern void parse_args (int argc, char **argv);
 extern void parse_file (char *file_name, char file_type);
+extern void finish (void);
 
 extern Operation *ops;
 extern Instruction *iq;

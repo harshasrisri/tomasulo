@@ -1,3 +1,9 @@
+/* Default file to look for definition of instructions */
+#define DEF_INSTR_DEFN_FILE "instr.def"
+
+/* Default file to look for instruction trace */
+#define DEF_TRACE_FILE "trace"
+
 /* No of fields to scan in an instruction definition file */
 #define NUM_OP_DEFN_FIELDS 4
 

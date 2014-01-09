@@ -119,4 +119,6 @@ void parse_file (char *file_name, char file_type) {
 				fatal ("unknown file type to function : %c\n", file_type);
 		}
 	}
+
+	fclose (fp);
 }
