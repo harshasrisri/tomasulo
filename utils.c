@@ -9,7 +9,7 @@ char *inst_trace_file;
 void parse_args (int argc, char **argv) {
 	int c;
 
-	while ((c = getopt (argc, argv, "a:d:t:h")) != -1)
+	while ((c = getopt (argc, argv, "d:t:h")) != -1)
 		switch (c) {
 			case 'd' :
 				inst_defn_file = strdup (optarg);
@@ -35,6 +35,19 @@ void parse_args (int argc, char **argv) {
 }
 
 void finish (void) {
+	while (instr_count) {
+		free (iq[instr_count].opcd);
+		free (iq[instr_count].dest);
+		free (iq[instr_count].src1);
+		free (iq[instr_count].src2);
+		instr_count--;
+	}
+
+	while (op_count)
+		free (ops[op_count--].name);
+
 	free (iq);
 	free (ops);
+	free (inst_trace_file);
+	free (inst_defn_file);
 }

@@ -2,27 +2,28 @@
 
 static void create_operation (char *line) {
 	char name[20], typ[20];
-	int num_ops, latency; 
+	int num_ops, latency, num_rs; 
 	char type;
 
 	if (!(op_count % 10))
 		ops = (Operation *) realloc (ops, sizeof(Operation) * 10);
 
-	if (NUM_OP_DEFN_FIELDS != sscanf (line, "%s %d %d %c", name, &num_ops, &latency, &type))
-		fatal ("Invalid number of fields in instruction definition : %s\n", line);
-
+	strcpy (name, strtok (line,DELIMITERS));
 	if (!name[0])
 		fatal ("OP name not proper : %s\n", line);
 	ops[op_count].name = strdup (name);
 
+	num_ops = atoi (strtok (NULL, DELIMITERS));
 	if (0 > num_ops)
 		fatal ("Operand count not proper : %s\n", line);
 	ops[op_count].num_ops = num_ops;
 
+	latency = atoi (strtok (NULL, DELIMITERS));
 	if (0 >= latency)
 		fatal ("Latency not proper : %s\n", line);
 	ops[op_count].latency = latency;
 
+	type = (strtok (NULL, DELIMITERS))[0];
 	if ('I' == type) {
 		ops[op_count].type = INTEGER;
 		strcpy (typ, "Integer");
@@ -38,9 +39,14 @@ static void create_operation (char *line) {
 	else
 		fatal ("Unknown instruction type : %s\n", line);
 
-	pinfo ("Definition %d : %s operation %s defined taking %d operands with latency %d\n",
+	num_rs = atoi (strtok (NULL, DELIMITERS));
+	if (0 >= num_rs)
+		fatal ("Number of Reservations  not proper : %s\n", line);
+	ops[op_count].num_rs = num_rs;
+
+	pinfo ("%d : %s operation %s defined taking %d operands with latency %d and %d reservation stations\n",
 			op_count, typ, ops[op_count].name, ops[op_count].num_ops, 
-			ops[op_count].latency);
+			ops[op_count].latency, ops[op_count].num_rs);
 
 	op_count++;
 }
@@ -71,16 +77,17 @@ static void queue_instuction (char *line) {
 		fatal ("Undefined instruction : %s\n", line);
 
 	iq[instr_count].opcd = strdup (strtok (line, DELIMITERS));
-
-	if (instr_defn.num_ops > 0) iq[instr_count].dest = strdup (strtok (NULL, DELIMITERS));
-
-	if (instr_defn.num_ops > 1) iq[instr_count].src1 = strdup (strtok (NULL, DELIMITERS));
-
-	if (instr_defn.num_ops > 2) iq[instr_count].src2 = strdup (strtok (NULL, DELIMITERS));
-
 	iq[instr_count].num_ops = instr_defn.num_ops;
-
 	iq[instr_count].latency = instr_defn.latency;
+
+	if (instr_defn.num_ops > 0) 
+		iq[instr_count].dest = strdup (strtok (NULL, DELIMITERS));
+
+	if (instr_defn.num_ops > 1) 
+		iq[instr_count].src1 = strdup (strtok (NULL, DELIMITERS));
+
+	if (instr_defn.num_ops > 2) 
+		iq[instr_count].src2 = strdup (strtok (NULL, DELIMITERS));
 
 	pinfo ("Instruction %d : %s %s, %s, %s \n", instr_count, 
 			iq[instr_count].opcd, iq[instr_count].dest,
