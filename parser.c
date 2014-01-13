@@ -2,7 +2,7 @@
 
 static void create_operation (char *line) {
 	char name[20], typ[20];
-	int num_ops, latency, num_rs; 
+	int num_ops, latency; 
 	char type;
 
 	if (!(op_count % 10))
@@ -39,14 +39,9 @@ static void create_operation (char *line) {
 	else
 		fatal ("Unknown instruction type : %s\n", line);
 
-	num_rs = atoi (strtok (NULL, DELIMITERS));
-	if (0 >= num_rs)
-		fatal ("Number of Reservations  not proper : %s\n", line);
-	ops[op_count].num_rs = num_rs;
-
-	pinfo ("%d : %s operation %s defined taking %d operands with latency %d and %d reservation stations\n",
+	pinfo ("%d : %s operation %s defined taking %d operands with latency %d\n",
 			op_count, typ, ops[op_count].name, ops[op_count].num_ops, 
-			ops[op_count].latency, ops[op_count].num_rs);
+			ops[op_count].latency);
 
 	op_count++;
 }

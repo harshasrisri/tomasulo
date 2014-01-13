@@ -7,7 +7,6 @@ typedef struct {
 	char *name;
 	int num_ops;
 	int latency;
-	int num_rs;
 	enum instr_type type;
 } Operation;
 
