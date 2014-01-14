@@ -24,14 +24,8 @@ typedef struct {
 
 typedef struct {
 	enum rs_status status;
-	enum instr_type rs_type;
-	char *op;
 	struct resrv_stn *qj;
 	struct resrv_stn *qk;
-	union {
-		int int_val;
-		float float_val;
-	} value;
 	int timer;
 } resrv_stn;
 
