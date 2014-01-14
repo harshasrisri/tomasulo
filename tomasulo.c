@@ -8,9 +8,6 @@ int instr_count = 0;
 int instr_proc = 0;
 unsigned int cycles = 0;
 
-void create_arch (void) {
-
-}
 
 int main (int argc, char **argv) {
 

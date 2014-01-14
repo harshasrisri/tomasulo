@@ -23,3 +23,13 @@ extern void finish (void);
 extern Operation *ops;
 extern Instruction *iq;
 extern int instr_count, instr_proc, op_count;
+
+/*Architecture variables*/
+extern RS *add_fp_rs;
+extern RS *add_int_rs;
+extern RS *mul_fp_rs;
+extern RS *mul_int_rs;
+extern RS *ld_rs;
+extern RS *st_rs;
+
+
