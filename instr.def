@@ -1,24 +1,23 @@
 # Configuration file for instructions, defining their opcode, num of operands and latency
-# Format - OPCODE NUM_OPERANDS LATENCY TYPE NUM_RS
+# Format - OPCODE NUM_OPERANDS LATENCY TYPE
 
 # OPCODE : A string literal label
 # NUM_OPERANDS : Number of operands taken by the defined Opcode
 # LATENCY : Latency in cycles, for the defined Opcode to execute.
 # TYPE : I - Integer / F - Float / C -Common
-# NUM_RS : Number of Reservation Stations for this operation
 
 # Memory operations
-LD 		2 	3 	C 	2
-SD 		2 	3 	C 	2
+LD 		2 	3 	C
+SD 		2 	3 	C
 
 # Integer Operations
-ADD 	3 	2 	I 	2
-SUB 	3 	2 	I 	2
-MUL 	3 	6 	I 	2
-DIV 	3 	10 	I	2
+ADD 	3 	2 	I
+SUB 	3 	2 	I
+MUL 	3 	6 	I
+DIV 	3 	10 	I
 
 # Floating point operations
-ADDD 	3 	4 	F 	2
-SUBD 	3 	4 	F 	2
-MULD 	3 	8 	F 	2
-DIVD 	3 	12	F	2
+ADDD 	3 	4 	F
+SUBD 	3 	4 	F
+MULD 	3 	8 	F
+DIVD 	3 	12	F
