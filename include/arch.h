@@ -28,3 +28,9 @@
 
 /* RSs for FP Multipliers */
 #define NUM_FLT_MUL_RS 2
+
+/* MAX number of Reservation stations */
+#define MAX(a,b) ((a)>(b)?(a):(b))
+#define MAX_RS MAX( \
+		MAX(NUM_LD_RS,NUM_SD_RS),MAX( \
+			MAX(NUM_INT_ADD_RS,NUM_INT_MUL_RS),MAX(NUM_FLT_ADD_RS,NUM_FLT_MUL_RS)))
