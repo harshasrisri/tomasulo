@@ -138,6 +138,10 @@ int main (int argc, char **argv) {
 	while (instr_proc < instr_count) {
 
 		cycles++;
+
+		issue ();
+
+		/* execute (); */
 	}
 
 	finish ();
