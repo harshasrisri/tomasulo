@@ -68,7 +68,159 @@ void create_arch()
 	}
 }
 
-RS *dep_lookup (char *name) {
+RS *dep_lookup(char *src)
+{
+	int instr = instr_proc-1;
+
+	while(instr>0){
+		if(!strcmp(iq[instr].dest,src)){
+			return iq[instr].cur;
+		}
+		instr--;
+	}
+
+	return NULL;
+}
+
+void execute()
+{
+	int rs_no=0;
+	int cur_instr=0;
+	
+	/*For each RS, cycle through and check which is ready for execution*/
+	
+	/*FP ADDER Reservation stations*/
+	while(rs_no<NUM_FLT_ADD_RS){
+
+		if(add_fp_rs[rs_no].status == BUSY){
+			cur_instr = add_fp_rs[rs_no].instr_no;	
+			
+			if((add_fp_rs[rs_no].qj == NULL)&&(add_fp_rs[rs_no].qk == NULL)){
+
+				/*if the timer has not been set ,set it to the instruction latency*/
+				if(add_fp_rs[rs_no].timer==0){
+					add_fp_rs[rs_no].timer = iq[cur_instr].latency;   /*TO DO Move the latency to RS ?*/
+					iq[cur_instr].exec_time = cycles;
+				}
+				else
+					add_fp_rs[rs_no].timer--;
+			}
+		}
+	
+		rs_no++;
+	}
+
+    rs_no=0;
+
+	/*INT ADDER Reservation stations*/ 
+	while(rs_no<NUM_INT_ADD_RS){
+
+		if(add_int_rs[rs_no].status == BUSY){
+		
+			cur_instr = add_int_rs[rs_no].instr_no;	
+			
+			if((add_int_rs[rs_no].qj == NULL)&&(add_int_rs[rs_no].qk == NULL)){
+
+				/*if the timer has not been set ,set it to the instruction latency*/
+				if(add_int_rs[rs_no].timer==0){
+					add_int_rs[rs_no].timer = iq[cur_instr].latency;   /*TO DO Move the latency to RS ?*/
+					iq[cur_instr].exec_time = cycles;
+				}
+				else
+					add_int_rs[rs_no].timer--;
+			}
+		}
+	
+		rs_no++;
+	}
+
+	  rs_no=0;
+	 
+	/*FP MULTIPLIER Reservation stations*/ 
+	while(rs_no<NUM_FLT_MUL_RS){
+
+		if(mul_fp_rs[rs_no].status == BUSY){
+		
+			cur_instr = mul_fp_rs[rs_no].instr_no;	
+			
+			if((mul_fp_rs[rs_no].qj == NULL)&&(mul_fp_rs[rs_no].qk == NULL)){
+
+				/*if the timer has not been set ,set it to the instruction latency*/
+				if(mul_fp_rs[rs_no].timer==0){
+					mul_fp_rs[rs_no].timer = iq[cur_instr].latency;   /*TO DO Move the latency to RS ?*/
+					iq[cur_instr].exec_time = cycles;
+				} 
+				else 
+					mul_fp_rs[rs_no].timer--;
+			}
+		}
+	
+		rs_no++;
+	}
+
+
+	/*INT MULTIPLIER Reservation stations*/ 
+  	 while(rs_no<NUM_INT_MUL_RS){
+
+		if(mul_int_rs[rs_no].status == BUSY){
+		
+			cur_instr = mul_int_rs[rs_no].instr_no;	
+			
+			if((mul_int_rs[rs_no].qj == NULL)&&(mul_int_rs[rs_no].qk == NULL)){
+
+				/*if the timer has not been set ,set it to the instruction latency*/
+				if(mul_int_rs[rs_no].timer==0){
+					mul_int_rs[rs_no].timer = iq[cur_instr].latency;   /*TO DO Move the latency to RS ?*/
+					iq[cur_instr].exec_time = cycles;
+				} 
+				else 
+					mul_int_rs[rs_no].timer--;
+			}
+		}
+	
+		rs_no++;
+	}
+
+
+	/*LOAD Reservation stations*/ 
+	 while(rs_no<NUM_LD_RS){
+
+		if(ld_rs[rs_no].status == BUSY){
+		
+			cur_instr = ld_rs[rs_no].instr_no;	
+			
+				/*if the timer has not been set ,set it to the instruction latency*/
+				if(ld_rs[rs_no].timer==0){
+					ld_rs[rs_no].timer = iq[cur_instr].latency;   /*TO DO Move the latency to RS ?*/
+					iq[cur_instr].exec_time = cycles;
+				} 
+				else 
+					ld_rs[rs_no].timer--;
+			}
+
+		rs_no++;
+		}
+	 
+
+	/*STORE Reservation stations*/ 
+	 while(rs_no<NUM_SD_RS){
+
+		if(sd_rs[rs_no].status == BUSY){
+		
+			cur_instr = sd_rs[rs_no].instr_no;	
+			
+				/*if the timer has not been set ,set it to the instruction latency*/
+				if(sd_rs[rs_no].timer==0){
+					sd_rs[rs_no].timer = iq[cur_instr].latency;   /*TO DO Move the latency to RS ?*/
+					iq[cur_instr].exec_time = cycles;
+				} 
+				else 
+					sd_rs[rs_no].timer--;
+			}
+		rs_no++;
+		
+	 	}
+
 }
 
 void issue () {

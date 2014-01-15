@@ -17,6 +17,7 @@ typedef struct {
 	char *src2;
 	int num_ops;
 	int latency;
+	struct resrv_stn *cur;
 	unsigned int issue_time;
 	unsigned int exec_time;
 	unsigned int write_time;
@@ -24,6 +25,7 @@ typedef struct {
 
 struct resrv_stn {
 	enum rs_status status;
+	int instr_no;
 	struct resrv_stn *qj;
 	struct resrv_stn *qk;
 	int timer;
