@@ -23,13 +23,12 @@ typedef struct {
 	unsigned int write_time;
 } Instruction;
 
-typedef struct {
+struct resrv_stn {
 	enum rs_status status;
-	enum instr_type rs_type;
 	int instr_no;
 	struct resrv_stn *qj;
 	struct resrv_stn *qk;
 	int timer;
-} resrv_stn;
+};
 
 typedef struct resrv_stn RS;
