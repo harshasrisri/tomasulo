@@ -25,7 +25,7 @@ typedef struct {
 
 struct resrv_stn {
 	enum rs_status status;
-	int instr_no;
+	Instruction *instr;
 	struct resrv_stn *qj;
 	struct resrv_stn *qk;
 	int timer;
