@@ -82,7 +82,7 @@ RS *dep_lookup(char *src)
 	return NULL;
 }
 
-void update_rsrv_stn(int stn_type, int no_stn)
+static void update_rs_exec(int stn_type, int no_stn)
 {
 	RS *rsrv_stn;
 	int rs_no = 0;
@@ -127,17 +127,81 @@ void update_rsrv_stn(int stn_type, int no_stn)
 	}
 }
 
+static void update_rs_write(int stn_type, int no_stn)
+{
+	RS *rsrv_stn;
+	int rs_no = 0;
+
+	/*Find the reservation station requested */
+	switch(stn_type){
+		case FP_ADD : rsrv_stn = RES_STN(add,_fp);
+						  break;
+		case FP_MUL : rsrv_stn = RES_STN(mul,_fp);
+						  break;
+		case INT_ADD: rsrv_stn = RES_STN(add,_int);
+						  break;
+		case INT_MUL: rsrv_stn = RES_STN(mul,_int);
+						  break;
+		case LD : rsrv_stn = RES_STN(ld,);
+						  break;
+		case SD : rsrv_stn = RES_STN(sd,);
+						  break;
+		default : fatal("Access to a non existed reservation station requested"); 
+		
+		}
+
+	/*Cycle through the Reservation Stations of the given type*/
+	while(rs_no<no_stn){
+	 
+	/*check if any RS is ready to move to write back stage*/
+		if(rsrv_stn[rs_no].status == BUSY){
+			
+			if((rsrv_stn[rs_no].qj == NULL)&&(rsrv_stn[rs_no].qk == NULL)){
+
+				/*if the functional unit has completed execution*/
+				if(rsrv_stn[rs_no].timer == 0){
+					rsrv_stn[rs_no].status = RESULT_READY;
+				}
+			}
+		}
+	
+	 /*Also check if any RS will complete write back this cycle*/
+		else if(rsrv_stn[rs_no].status == RESULT_READY){
+			
+			/*update the write back time */
+			rsrv_stn[rs_no].instr->write_time = cycles;
+			
+			/*Flust the instruction and reset the reservation station */
+			rsrv_stn[rs_no].status = AVAILABLE;
+			rsrv_stn[rs_no].instr = NULL;		
+			rsrv_stn[rs_no].qj = rsrv_stn[rs_no].qk = NULL;
+
+		}
+		
+		rs_no++;
+	}
+}
 
 void execute()
 {
 	/*Update the fields of all the reservations stations*/
- 	update_rsrv_stn(FP_ADD,NUM_FLT_ADD_RS);
-	update_rsrv_stn(FP_MUL,NUM_FLT_MUL_RS);
-	update_rsrv_stn(INT_ADD,NUM_INT_ADD_RS);
-	update_rsrv_stn(INT_MUL,NUM_INT_MUL_RS);
-	update_rsrv_stn(LD,NUM_LD_RS);
-	update_rsrv_stn(SD,NUM_SD_RS);
+ 	update_rs_exec(FP_ADD,NUM_FLT_ADD_RS);
+ 	update_rs_exec(FP_MUL,NUM_FLT_MUL_RS);
+	update_rs_exec(INT_ADD,NUM_INT_ADD_RS);
+	update_rs_exec(INT_MUL,NUM_INT_MUL_RS);
+	update_rs_exec(LD,NUM_LD_RS);
+	update_rs_exec(SD,NUM_SD_RS);
 
+}
+
+void write_back()
+{
+ 	update_rs_write(FP_ADD,NUM_FLT_ADD_RS);
+ 	update_rs_write(FP_MUL,NUM_FLT_MUL_RS);
+	update_rs_write(INT_ADD,NUM_INT_ADD_RS);
+	update_rs_write(INT_MUL,NUM_INT_MUL_RS);
+	update_rs_write(LD,NUM_LD_RS);
+	update_rs_write(SD,NUM_SD_RS);
 }
 
 void issue () {
@@ -195,6 +259,7 @@ void issue () {
 	instr_proc++;	
 }
 
+
 int main (int argc, char **argv) {
 
 	parse_args (argc, argv);
@@ -212,6 +277,9 @@ int main (int argc, char **argv) {
 		issue ();
 
 		execute ();
+		
+		write_back();
+
 	}
 
 	finish ();
